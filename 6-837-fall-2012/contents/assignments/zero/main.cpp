@@ -7,7 +7,8 @@
 using namespace std;
 
 // Globals
-
+int color=0;
+float lr=1.,ud=1.,spinX=0.,spinZ=5.,theta=0.;
 // This is the list of points (3D vectors)
 vector<Vector3f> vecv;
 
@@ -35,12 +36,23 @@ void keyboardFunc( unsigned char key, int x, int y )
 {
     switch ( key )
     {
+	case 'r':
+		{
+		theta =theta + .0001f;
+		float tmp = spinX;
+		spinX = spinX*(cos(theta))-spinZ*sin(theta);
+		spinZ = tmp*sin(theta)+spinZ*cos(theta);
+		cout<<"r pressed, theta is: " << theta << endl;
+		cout<<"\tspix: " << spinX << "\tspinY: " << spinZ << endl;
+		break;
+		}
     case 27: // Escape key
         exit(0);
         break;
     case 'c':
         // add code to change color here
-		cout << "Unhandled key press " << key << "." << endl; 
+		color = (color+1)%4;
+//		cout << "Unhandled key press " << key << "." << endl; 
         break;
     default:
         cout << "Unhandled key press " << key << "." << endl;        
@@ -58,18 +70,22 @@ void specialFunc( int key, int x, int y )
     {
     case GLUT_KEY_UP:
         // add code to change light position
+		ud+=.5;
 		cout << "Unhandled key press: up arrow." << endl;
 		break;
     case GLUT_KEY_DOWN:
         // add code to change light position
+		ud-=.5;
 		cout << "Unhandled key press: down arrow." << endl;
 		break;
     case GLUT_KEY_LEFT:
         // add code to change light position
+		lr-=.5;
 		cout << "Unhandled key press: left arrow." << endl;
 		break;
     case GLUT_KEY_RIGHT:
         // add code to change light position
+		lr+=.5;
 		cout << "Unhandled key press: right arrow." << endl;
 		break;
     }
@@ -92,7 +108,7 @@ void drawScene(void)
 
     // Position the camera at [0,0,5], looking at [0,0,0],
     // with [0,1,0] as the up direction.
-    gluLookAt(0.0, 0.0, 5.0,
+    gluLookAt(spinX,2., spinZ,
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0);
 
@@ -105,7 +121,7 @@ void drawScene(void)
                                  {0.3, 0.8, 0.9, 1.0} };
     
 	// Here we use the first color entry as the diffuse color
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffColors[0]);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffColors[color]);
 
 	// Define specular color and shininess
     GLfloat specColor[] = {1.0, 1.0, 1.0, 1.0};
@@ -120,7 +136,7 @@ void drawScene(void)
     // Light color (RGBA)
     GLfloat Lt0diff[] = {1.0,1.0,1.0,1.0};
     // Light position
-	GLfloat Lt0pos[] = {1.0f, 1.0f, 5.0f, 1.0f};
+	GLfloat Lt0pos[] = {lr, ud, 5.0f, 1.0f};
 
     glLightfv(GL_LIGHT0, GL_DIFFUSE, Lt0diff);
     glLightfv(GL_LIGHT0, GL_POSITION, Lt0pos);
