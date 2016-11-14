@@ -20,6 +20,7 @@ vector<vector<unsigned> > vecf;
 
 
 // You will need more global variables to implement color and position changes
+//
 
 
 // These are convenience functions which allow us to call OpenGL 
