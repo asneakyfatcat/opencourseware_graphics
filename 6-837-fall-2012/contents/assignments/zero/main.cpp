@@ -21,7 +21,30 @@ vector<vector<unsigned> > vecf;
 
 // You will need more global variables to implement color and position changes
 //
+void loadInput(){
+	char buffer[1000];
 
+	while(cin.getline(buffer, 1000) && !cin.bad()){
+	stringstream ss(buffer);
+	string s;
+	Vector3f a=Vector3f(0);
+	ss >> s;
+
+//	ss >> v[0] >> v[1] >> v[2];
+	if(s=="v"){
+//		ss >> v[0] >> v[1] >> v[2];
+//		vecv.push_back(v);
+	}
+	else if(s=="vn"){
+		
+	}
+	else if(s=="f"){
+
+	}
+	
+//	cout << "test: first line is: " << buffer << endl;
+	}
+}
 
 // These are convenience functions which allow us to call OpenGL 
 // methods on Vec3d objects
@@ -178,17 +201,12 @@ void reshapeFunc(int w, int h)
     gluPerspective(50.0, 1.0, 1.0, 100.0);
 }
 
-void loadInput()
-{
-	// load the OBJ file here
-}
-
 // Main routine.
 // Set up OpenGL, define the callbacks and start the main loop
 int main( int argc, char** argv )
 {
     loadInput();
-
+	
     glutInit(&argc,argv);
 
     // We're going to animate it, so double buffer 
